@@ -1,0 +1,27 @@
+kafka-practical-work-7-python/
+├── README.md
+├── requirements.txt
+├── terraform/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── versions.tf
+│   ├── terraform.tfvars.example
+│   └── modules/kafka/cluster/
+├── client/
+│   ├── producer.py
+│   └── consumer.py
+├── schema/
+│   └── event.avsc
+├── nifi/
+│   ├── docker-compose.yml
+│   └── certs/
+└── docs/
+    ├── producer_logs.txt
+    ├── consumer_logs.txt
+    ├── schema_registry_output.txt
+    ├── kafka_topic_describe.txt
+    ├── hardware_resources.md
+    └── nifi/
+        ├── nifi_integration.md
+        └── nifi_output_messages.txt
