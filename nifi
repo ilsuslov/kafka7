@@ -1,0 +1,27 @@
+sudo apt update && sudo apt install -y docker.io
+sudo systemctl start docker
+docker run -d --name nifi -p 8080:8080 -e NIFI_WEB_HTTP_PORT=8080 apache/nifi:latest
+
+
+Kafka Brokers	`rc1a-spkpvkc2po2tm410.mdb.yandexcloud.net:9091,rc1b-guoaqpbufa8obitb.mdb.yandexcloud.net:9091,rc1d-gnkmfu52undh2kdd.mdb.yandexcloud.net:9091`
+Topic	`orders-topic`
+Group ID	`nifi-consumer-group`
+Security Protocol	`SASL_SSL`
+SASL Mechanism	`SCRAM-SHA-512`
+SASL Username	`kafka_user`
+SASL Password	`KafkaLab2024!`
+Auto Offset Reset	`earliest`
+
+
+logs NiFi
+$ docker logs nifi --tail 15
+2026-07-09 17:10:02,112 INFO [Timer-Driven Process Thread-2] o.a.n.processors.kafka.ConsumeKafka_2_6 ConsumeKafka_2_6[id=8a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d] Successfully committed offsets for group nifi-consumer-group
+2026-07-09 17:10:02,115 INFO [Timer-Driven Process Thread-2] o.a.n.processors.kafka.ConsumeKafka_2_6 ConsumeKafka_2_6[id=8a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d] Consumed 5 records from topic orders-topic
+2026-07-09 17:10:03,001 INFO [NiFi Web Server-15] o.a.n.w.s.NiFiRestAccessApi GET /nifi-api/flow/process-groups/root/status (127.0.0.1) 200 OK
+
+
+Подтверждение передачи данных
+Producer отправил 5 Avro-сообщений в топик orders-topic.
+NiFi подключился по SASL_SSL, авторизовался через SCRAM-SHA-512, успешно вычитал 5 записей.
+Процессор LogAttribute зафиксировал атрибуты сообщений в логах NiFi.
+Параллельный запуск consumer.py подтвердил целостность данных и корректность десериализации Avro-схемы.
