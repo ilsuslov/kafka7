@@ -1,0 +1,32 @@
+#Получение списка зарегистрированных схем (subjects):
+
+$ curl -s -u schema_registry_user:SchemaLab2024! \
+  https://c-c9q84e4h5k4qunej8nol.rw.mdb.yandexcloud.net/subjects | python3 -m json.tool
+
+#Вывод:
+
+[
+    "orders-topic-value"
+]
+
+#Получение последней версии схемы для топика:
+
+$ curl -s -u schema_registry_user:SchemaLab2024! \
+  https://c-c9q84e4h5k4qunej8nol.rw.mdb.yandexcloud.net/subjects/orders-topic-value/versions/latest | python3 -m json.tool
+
+#Вывод:
+{
+    "subject": "orders-topic-value",
+    "id": 1,
+    "version": 1,
+    "schema": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"com.lab.kafka\",\"fields\":[{\"name\":\"order_id\",\"type\":\"string\"},{\"name\":\"customer\",\"type\":\"string\"},{\"name\":\"amount\",\"type\":\"double\"},{\"name\":\"timestamp\",\"type\":\"long\"}]}"
+}
+
+#Получение схемы по её ID:
+$ curl -s -u schema_registry_user:SchemaLab2024! \
+  https://c-c9q84e4h5k4qunej8nol.rw.mdb.yandexcloud.net/schemas/ids/1 | python3 -m json.tool
+
+#Вывод:
+{
+    "schema": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"com.lab.kafka\",\"fields\":[{\"name\":\"order_id\",\"type\":\"string\"},{\"name\":\"customer\",\"type\":\"string\"},{\"name\":\"amount\",\"type\":\"double\"},{\"name\":\"timestamp\",\"type\":\"long\"}]}"
+}
